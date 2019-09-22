@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.leonis.android.rasalas.lib.HTTPClient;
 import com.leonis.android.rasalas.models.Prediction;
+import com.leonis.android.rasalas.views.PredictionView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void getPredictions(HashMap<String, String> query) {
+    public void getPredictions(HashMap<String, String> query) {
         Bundle args = new Bundle();
         args.putSerializable("query", query);
         getLoaderManager().initLoader(LOADER_ID, args, new LoaderManager.LoaderCallbacks<HashMap<String, Object>>() {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         for(int i=0;i<body.getJSONArray("predictions").length();i++) {
                             predictions.add(new Prediction(body.getJSONArray("prediction").getJSONObject(i)));
                         }
-                        predictionView.setPredictions(predictions);
+                        predictionView.addPredictions(predictions);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

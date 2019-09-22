@@ -26,4 +26,16 @@ public class Prediction {
         } catch (ParseException e) {
         }
     }
+
+    public Date getDatetime() {
+        return this.datetime;
+    }
+
+    public String getPair() {
+        return this.pair;
+    }
+
+    public String getResult() {
+        return this.result;
+    }
 }
