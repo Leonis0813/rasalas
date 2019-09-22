@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.leonis.android.rasalas.MainActivity">
 
+    <com.leonis.android.rasalas.views.PredictionView
+        android:id="@+id/prediction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

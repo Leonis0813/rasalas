@@ -38,13 +38,13 @@ public class PredictionView extends RelativeLayout implements OnClickListener {
 
         View layout = View.inflate(context, R.layout.prediction_view, this);
 
-        nextPage = layout.findViewById(R.id.index_next_page);
+        nextPage = layout.findViewById(R.id.next_page);
         nextPage.setOnClickListener(this);
         nextPage.setVisibility(INVISIBLE);
 
         predictions = new ArrayList<>();
         predictionListAdapter = new PredictionListAdapter(context, predictions);
-        predictionListView = layout.findViewById(R.id.index_prediction_list);
+        predictionListView = layout.findViewById(R.id.prediction_list);
 
         currentPage = 1;
     }

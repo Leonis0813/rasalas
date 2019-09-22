@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.leonis.android.rasalas.lib.HTTPClient;
 import com.leonis.android.rasalas.models.Prediction;
@@ -31,18 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
         predictionView = findViewById(R.id.prediction);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
     }
 
     public void getPredictions(HashMap<String, String> query) {
