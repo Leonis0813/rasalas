@@ -2,25 +2,20 @@ package com.leonis.android.rasalas;
 
 import android.app.LoaderManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.Loader;
-import android.gesture.Prediction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.leonis.android.rasalas.lib.HTTPClient;
+import com.leonis.android.rasalas.models.Prediction;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final int LOADER_ID = 0;
@@ -66,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
                 if(code == 200) {
                     try {
                         JSONObject body = new JSONObject(data.get("body").toString());
-                        ArrayList<Prediction> predictions;
+                        ArrayList<Prediction> predictions = new ArrayList<>();
                         for(int i=0;i<body.getJSONArray("predictions").length();i++) {
-                            predictions.add(new Prediction(body.getJSONArray("prediction").get(i)));
+                            predictions.add(new Prediction(body.getJSONArray("prediction").getJSONObject(i)));
                         }
                         predictionView.setPredictions(predictions);
                     } catch (JSONException e) {
