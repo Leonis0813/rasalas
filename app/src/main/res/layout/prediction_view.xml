@@ -17,5 +17,5 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/prediction_list"
         android:layout_marginTop="10dp"
-        android:text="さらに読み込む" />
+        android:text="@string/next" />
 </RelativeLayout>

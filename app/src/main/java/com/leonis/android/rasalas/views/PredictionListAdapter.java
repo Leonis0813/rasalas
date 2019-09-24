@@ -13,14 +13,15 @@ import com.leonis.android.rasalas.models.Prediction;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by leonis on 2019/09/22.
  */
 
-public class PredictionListAdapter extends BaseAdapter {
-    private Context context;
-    private List<Prediction> predictions;
+class PredictionListAdapter extends BaseAdapter {
+    private final Context context;
+    private final List<Prediction> predictions;
 
     private class ViewHolder {
         TextView dateView;
@@ -58,7 +59,7 @@ public class PredictionListAdapter extends BaseAdapter {
         if (view == null) {
             LayoutInflater inflater =
                     (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.prediction_list_view, parent, false);
+            view = inflater != null ? inflater.inflate(R.layout.prediction_list_view, parent, false) : null;
 
             TextView dateView = view.findViewById(R.id.prediction_date);
             TextView pairView = view.findViewById(R.id.prediction_pair);
@@ -73,7 +74,7 @@ public class PredictionListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPAN);
         holder.dateView.setText(formatter.format(prediction.getDatetime()));
         holder.pairView.setText(prediction.getPair());
         switch (prediction.getResult()) {

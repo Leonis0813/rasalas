@@ -16,18 +16,16 @@ import com.leonis.android.rasalas.R;
 import com.leonis.android.rasalas.models.Prediction;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by leonis on 2019/09/22.
  */
 
 public class PredictionView extends RelativeLayout implements OnClickListener {
-    private PredictionListAdapter predictionListAdapter;
-    private ListView predictionListView;
-    private ArrayList<Prediction> predictions;
+    private final PredictionListAdapter predictionListAdapter;
+    private final ListView predictionListView;
+    private final ArrayList<Prediction> predictions;
     private final Button nextPage;
-    private HashMap<String, String> query;
     private int currentPage;
 
     private final Context context;
@@ -54,9 +52,7 @@ public class PredictionView extends RelativeLayout implements OnClickListener {
     }
 
     public void addPredictions(ArrayList<Prediction> predictions) {
-        for(Prediction payment : predictions) {
-            this.predictions.add(payment);
-        }
+        this.predictions.addAll(predictions);
         predictionListView.setAdapter(predictionListAdapter);
         fixListViewHeight(predictionListView);
         nextPage.setVisibility(predictions.isEmpty() ? INVISIBLE : VISIBLE);

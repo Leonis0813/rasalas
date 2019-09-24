@@ -22,7 +22,6 @@ import java.util.Properties;
 
 public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
     private Properties webApiProp;
-    private static String host;
     private HttpURLConnection con;
     private HashMap<String, Object> response;
 
@@ -37,7 +36,7 @@ public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
         try {
             webApiProp = new Properties();
             webApiProp.load(inputStream);
-            host = webApiProp.getProperty("host");
+            final String host = webApiProp.getProperty("host");
             baseUrl = "http://" + host + ":" + PORT + BASE_PATH;
         } catch (IOException e) {
             e.printStackTrace();
