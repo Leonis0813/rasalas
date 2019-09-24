@@ -3,7 +3,6 @@ package com.leonis.android.rasalas.lib;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Base64;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
