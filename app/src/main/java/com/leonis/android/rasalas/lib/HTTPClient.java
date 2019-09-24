@@ -3,6 +3,7 @@ package com.leonis.android.rasalas.lib;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -45,14 +46,10 @@ public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
         }
     }
 
-    public void getPredictions(HashMap<String, String> query) {
+    public void getPredictions(String page) {
         try {
-            StringBuilder query_string = new StringBuilder("?");
-            for (Map.Entry<String, String> entry : query.entrySet()) {
-                query_string.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-            }
-            query_string = new StringBuilder(query_string.substring(0, query_string.length() - 1));
-
+            StringBuilder query_string = new StringBuilder("?means=auto&page=");
+            query_string.append(page);
             con = (HttpURLConnection) new URL(baseUrl + "/predictions" + query_string).openConnection();
             con.setRequestMethod("GET");
         } catch (MalformedURLException e) {
@@ -78,7 +75,6 @@ public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
             while((st = br.readLine()) != null){
                 sb.append(st);
             }
-
             response = new HashMap<>();
             response.put("statusCode", con.getResponseCode());
             response.put("body", sb.toString());

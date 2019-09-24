@@ -62,6 +62,11 @@ public class PredictionView extends RelativeLayout implements OnClickListener {
         nextPage.setVisibility(predictions.isEmpty() ? INVISIBLE : VISIBLE);
     }
 
+    @Override
+    public void onClick(View v) {
+        ((MainActivity) context).getPredictions(Integer.toString(++currentPage));
+    }
+
     private void fixListViewHeight(ListView listView) {
         int totalHeight = 0;
         ListAdapter adapter = listView.getAdapter();
@@ -70,17 +75,11 @@ public class PredictionView extends RelativeLayout implements OnClickListener {
         for (int i = 0;i < itemCount;i++) {
             View listItem = adapter.getView(i, null, listView);
             listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight() - 50;
+            totalHeight += listItem.getMeasuredHeight() + 3;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight;
         listView.setLayoutParams(params);
-    }
-
-    @Override
-    public void onClick(View v) {
-        query.put("page", String.valueOf(++currentPage));
-        ((MainActivity) context).getPredictions(query);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 
 public class Prediction {
-    final private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ");
+    final private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private Date datetime;
     private String pair;
     private String result;

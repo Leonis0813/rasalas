@@ -10,6 +10,7 @@ import com.leonis.android.rasalas.lib.HTTPClient;
 import com.leonis.android.rasalas.models.Prediction;
 import com.leonis.android.rasalas.views.PredictionView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,16 +30,18 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
         predictionView = findViewById(R.id.prediction);
+        getPredictions("1");
     }
 
-    public void getPredictions(HashMap<String, String> query) {
+    public void getPredictions(String page) {
         Bundle args = new Bundle();
-        args.putSerializable("query", query);
+        args.putString("page", page);
+
         getLoaderManager().initLoader(LOADER_ID, args, new LoaderManager.LoaderCallbacks<HashMap<String, Object>>() {
             @Override
             public Loader<HashMap<String, Object>> onCreateLoader(int id, Bundle args) {
                 HTTPClient httpClient = new HTTPClient(activity);
-                httpClient.getPredictions(((HashMap<String, String>) args.getSerializable("query")));
+                httpClient.getPredictions(args.getString("page"));
                 return httpClient;
             }
 
@@ -48,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 if(code == 200) {
                     try {
                         JSONObject body = new JSONObject(data.get("body").toString());
-                        ArrayList<Prediction> predictions = new ArrayList<>();
-                        for(int i=0;i<body.getJSONArray("predictions").length();i++) {
-                            predictions.add(new Prediction(body.getJSONArray("prediction").getJSONObject(i)));
+                        JSONArray jsonArray = body.getJSONArray("predictions");
+                        final ArrayList<Prediction> predictions = new ArrayList<>();
+                        for(int i=0;i<jsonArray.length();i++) {
+                            predictions.add(new Prediction(jsonArray.getJSONObject(i)));
                         }
                         predictionView.addPredictions(predictions);
                     } catch (JSONException e) {
