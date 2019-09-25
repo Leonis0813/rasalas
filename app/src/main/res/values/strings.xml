@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">rasalas</string>
+    <string name="app_name">レート予測</string>
+    <string name="prediction_result">予測結果</string>
+    <string name="datetime">予測日時: </string>
+    <string name="pair">ペア: </string>
+    <string name="next">さらに読み込む</string>
 </resources>
