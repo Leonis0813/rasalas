@@ -4,6 +4,8 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Base64;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,23 +23,27 @@ import java.util.Properties;
  */
 
 public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
-    private Properties webApiProp;
-    private HttpURLConnection con;
-    private HashMap<String, Object> response;
-
     private static final String BASE_PATH = "/regulus/api";
     private static final String PORT = "80";
+
+    private HttpURLConnection con;
+    private HashMap<String, Object> response;
     private String baseUrl;
+    private String credential;
 
     public HTTPClient(Context context) {
         super(context);
         InputStream inputStream = context.getClassLoader().getResourceAsStream("web-api.properties");
 
         try {
-            webApiProp = new Properties();
+            Properties webApiProp = new Properties();
             webApiProp.load(inputStream);
-            final String host = webApiProp.getProperty("host");
-            baseUrl = "http://" + host + ":" + PORT + BASE_PATH;
+            baseUrl = "http://" + webApiProp.getProperty("host") + ":" + PORT + BASE_PATH;
+
+            String application_id = webApiProp.getProperty("application_id");
+            String application_key = webApiProp.getProperty("application_key");
+            byte[] credential = Base64.encode((application_id + ":" + application_key).getBytes(), Base64.DEFAULT);
+            this.credential = new String(credential, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,7 +64,7 @@ public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
 
     private HashMap<String, Object> sendRequest() {
         try {
-            con.setRequestProperty("Authorization", "Basic " + credential());
+            con.setRequestProperty("Authorization", "Basic " + credential);
             con.connect();
 
             StringBuilder sb = new StringBuilder();
@@ -91,18 +97,5 @@ public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
     @Override
     protected void onStartLoading() {
         forceLoad();
-    }
-
-    private String credential() {
-        String application_id = webApiProp.getProperty("application_id");
-        String application_key = webApiProp.getProperty("application_key");
-
-        byte[] credential = Base64.encode((application_id + ":" + application_key).getBytes(), Base64.DEFAULT);
-        try {
-            return new String(credential, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
