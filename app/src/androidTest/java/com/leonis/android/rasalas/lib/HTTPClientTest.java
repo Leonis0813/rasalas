@@ -45,7 +45,7 @@ public class HTTPClientTest {
     @Test
     public void testGetPredictions_OK() {
         HTTPClient httpClient = new HTTPClient(getContext());
-        httpClient.getPredictions("1");
+        httpClient.getPredictions("1", "USDJPY");
         JSONArray predictions = new JSONArray();
         JSONObject prediction = new JSONObject();
         HashMap<String, String> expected = new HashMap<String, String>() {
@@ -92,9 +92,9 @@ public class HTTPClientTest {
     }
 
     @Test
-    public void testGetPredictions_NG() {
+    public void testGetPredictions_NG_invalidPage() {
         HTTPClient httpClient = new HTTPClient(getContext());
-        httpClient.getPredictions("invalid");
+        httpClient.getPredictions("invalid", "USDJPY");
         JSONArray errors = new JSONArray();
         JSONObject error = new JSONObject();
 
@@ -118,6 +118,39 @@ public class HTTPClientTest {
             error = errors.getJSONObject(0);
 
             assertEquals("invalid_params_page", error.getString("error_code"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    public void testGetPredictions_NG_invalidPair() {
+        HTTPClient httpClient = new HTTPClient(getContext());
+        httpClient.getPredictions("1", "invalid");
+        JSONArray errors = new JSONArray();
+        JSONObject error = new JSONObject();
+
+        try {
+            error.put("error_code", "invalid_params_pair");
+            errors.put(error);
+            responseBody.put("errors", errors);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            fail();
+        }
+        setupMock(httpClient, 400, responseBody.toString());
+
+        ret = httpClient.loadInBackground();
+
+        assertEquals(400, Integer.parseInt(ret.get("statusCode").toString()));
+
+        try {
+            responseBody = new JSONObject(ret.get("body").toString());
+            errors = responseBody.getJSONArray("errors");
+            error = errors.getJSONObject(0);
+
+            assertEquals("invalid_params_pair", error.getString("error_code"));
         } catch (JSONException e) {
             e.printStackTrace();
             fail();
