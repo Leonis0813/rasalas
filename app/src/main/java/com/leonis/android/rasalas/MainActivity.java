@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
         predictionView = findViewById(R.id.prediction);
-        getPredictions("1", PredictionView.DEFAULT_PAIR);
+        getPredictions(PredictionView.DEFAULT_PAGE, PredictionView.DEFAULT_PAIR);
     }
 
-    public void getPredictions(String page, String pair) {
+    public void getPredictions(String page, final String pair) {
         Bundle args = new Bundle();
         args.putString("page", page);
         args.putString("pair", pair);
@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                         final ArrayList<Prediction> predictions = new ArrayList<>();
                         for(int i=0;i<jsonArray.length();i++) {
                             predictions.add(new Prediction(jsonArray.getJSONObject(i)));
+                        }
+                        if(!pair.equals(predictionView.getCurrentPair())) {
+                            predictionView.clearListView();
                         }
                         predictionView.addPredictions(predictions);
                     } catch (JSONException e) {
