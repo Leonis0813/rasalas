@@ -4,14 +4,11 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Base64;
 
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -49,10 +46,12 @@ public class HTTPClient extends AsyncTaskLoader<HashMap<String, Object>> {
         }
     }
 
-    public void getPredictions(String page) {
+    public void getPredictions(String page, String pair) {
         try {
             StringBuilder query_string = new StringBuilder("?means=auto&page=");
             query_string.append(page);
+            query_string.append("&pair=");
+            query_string.append(pair);
             con = (HttpURLConnection) new URL(baseUrl + "/predictions" + query_string).openConnection();
             con.setRequestMethod("GET");
         } catch (MalformedURLException e) {

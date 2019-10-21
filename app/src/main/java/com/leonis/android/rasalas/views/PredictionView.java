@@ -22,6 +22,8 @@ import java.util.ArrayList;
  */
 
 public class PredictionView extends RelativeLayout implements OnClickListener {
+    public static final String DEFAULT_PAIR = "USDJPY";
+
     private final PredictionListAdapter predictionListAdapter;
     private final ListView predictionListView;
     private final ArrayList<Prediction> predictions;

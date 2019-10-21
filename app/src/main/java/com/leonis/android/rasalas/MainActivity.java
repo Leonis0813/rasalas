@@ -30,18 +30,19 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
         predictionView = findViewById(R.id.prediction);
-        getPredictions("1");
+        getPredictions("1", PredictionView.DEFAULT_PAIR);
     }
 
-    public void getPredictions(String page) {
+    public void getPredictions(String page, String pair) {
         Bundle args = new Bundle();
         args.putString("page", page);
+        args.putString("pair", pair);
 
         getLoaderManager().initLoader(LOADER_ID, args, new LoaderManager.LoaderCallbacks<HashMap<String, Object>>() {
             @Override
             public Loader<HashMap<String, Object>> onCreateLoader(int id, Bundle args) {
                 HTTPClient httpClient = new HTTPClient(activity);
-                httpClient.getPredictions(args.getString("page"));
+                httpClient.getPredictions(args.getString("page"), args.getString("pair"));
                 return httpClient;
             }
 
