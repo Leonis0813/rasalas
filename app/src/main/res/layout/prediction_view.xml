@@ -3,12 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <Spinner
+        android:id="@+id/prediction_select_pair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/pairs" />
+
     <ListView
         android:id="@+id/prediction_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_below="@id/prediction_select_pair"/>
 
     <Button
         android:id="@+id/next_page"
