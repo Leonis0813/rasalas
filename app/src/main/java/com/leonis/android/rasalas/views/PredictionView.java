@@ -59,6 +59,10 @@ public class PredictionView extends RelativeLayout implements OnClickListener, O
         currentPair = DEFAULT_PAIR;
     }
 
+    public void setCurrentPair(String currentPair) {
+        this.currentPair = currentPair;
+    }
+
     public String getCurrentPair() {
         return currentPair;
     }
@@ -105,7 +109,6 @@ public class PredictionView extends RelativeLayout implements OnClickListener, O
         String selectedPair = spinner.getSelectedItem().toString();
         if(!currentPair.equals(selectedPair)) {
             ((MainActivity) context).getPredictions(DEFAULT_PAGE, selectedPair);
-            currentPair = selectedPair;
         }
     }
 

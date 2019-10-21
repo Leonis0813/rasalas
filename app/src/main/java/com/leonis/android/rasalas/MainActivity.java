@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(!pair.equals(predictionView.getCurrentPair())) {
                             predictionView.clearListView();
+                            predictionView.setCurrentPair(pair);
                         }
                         predictionView.addPredictions(predictions);
                     } catch (JSONException e) {
