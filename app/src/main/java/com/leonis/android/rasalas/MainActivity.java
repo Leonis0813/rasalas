@@ -30,18 +30,19 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
         predictionView = findViewById(R.id.prediction);
-        getPredictions("1");
+        getPredictions(PredictionView.DEFAULT_PAGE, PredictionView.DEFAULT_PAIR);
     }
 
-    public void getPredictions(String page) {
+    public void getPredictions(String page, final String pair) {
         Bundle args = new Bundle();
         args.putString("page", page);
+        args.putString("pair", pair);
 
         getLoaderManager().initLoader(LOADER_ID, args, new LoaderManager.LoaderCallbacks<HashMap<String, Object>>() {
             @Override
             public Loader<HashMap<String, Object>> onCreateLoader(int id, Bundle args) {
                 HTTPClient httpClient = new HTTPClient(activity);
-                httpClient.getPredictions(args.getString("page"));
+                httpClient.getPredictions(args.getString("page"), args.getString("pair"));
                 return httpClient;
             }
 
@@ -55,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
                         final ArrayList<Prediction> predictions = new ArrayList<>();
                         for(int i=0;i<jsonArray.length();i++) {
                             predictions.add(new Prediction(jsonArray.getJSONObject(i)));
+                        }
+                        if(!pair.equals(predictionView.getCurrentPair())) {
+                            predictionView.clearListView();
+                            predictionView.setCurrentPair(pair);
                         }
                         predictionView.addPredictions(predictions);
                     } catch (JSONException e) {
